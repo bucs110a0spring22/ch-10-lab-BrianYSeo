@@ -3,11 +3,12 @@ import pygame
 import random
 from src import hero
 from src import enemy
-
+from pygame import mixer
 
 class Controller:
     def __init__(self, width=640, height=480):
         pygame.init()
+        mixer.init()
         self.width = width
         self.height = height
         self.screen = pygame.display.set_mode((self.width, self.height))
@@ -35,6 +36,9 @@ class Controller:
                 self.gameOver()
 
     def gameLoop(self):
+        mixer.music.load('assets/halo.ogg')
+        mixer.music.set_volume(0.9)
+        mixer.music.play()
         while self.state == "GAME":
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
