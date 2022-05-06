@@ -3,17 +3,17 @@ import pygame
 import random
 from src import hero
 from src import enemy
-from pygame import mixer
+
 
 class Controller:
     def __init__(self, width=640, height=480):
         pygame.init()
-        mixer.init()
         self.width = width
         self.height = height
         self.screen = pygame.display.set_mode((self.width, self.height))
         self.background = pygame.Surface(self.screen.get_size()).convert()
-        self.background.fill((250, 250, 250))  # set the background to white
+        #self.background.fill((250, 250, 250))  # set the background to white
+        self.background.blit(pygame.image.load("assets/background.jpeg"),(0,0))
         pygame.font.init()  # you have to call this at the start, if you want to use this module.
         pygame.key.set_repeat(1, 50)  # initialize a held keey to act as repeated key strikes
         """Load the sprites that we need"""
@@ -36,9 +36,6 @@ class Controller:
                 self.gameOver()
 
     def gameLoop(self):
-        mixer.music.load('assets/halo.ogg')
-        mixer.music.set_volume(0.9)
-        mixer.music.play()
         while self.state == "GAME":
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -59,7 +56,8 @@ class Controller:
                 for e in fights:
                     if(self.hero.fight(e)):
                         e.kill()
-                        self.background.fill((250, 250, 250))
+                        #self.background.fill((250, 250, 250))
+                        self.background.blit(pygame.image.load('assets/background.jpeg'),(0,0))
                     else:
                         self.background.fill((250, 0, 0))
                         self.enemies.add(e)
